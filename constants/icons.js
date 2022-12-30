@@ -1,0 +1,1 @@
+export { ReactComponent as DownArrow } from "@invoice/assets/icon-arrow-down.svg";
