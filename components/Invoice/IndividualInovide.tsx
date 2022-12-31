@@ -1,41 +1,9 @@
 import React, { useState } from "react";
-import {invoice_dummy_data} from '../../constants/data'
-import DownArrow from '../../assets/icon-arrow-down.svg'
-import DownRight from '../../assets/icon-arrow-right.svg'
-import IconPlus from '../../assets/icon-plus.svg'
+import { Table } from '@nextui-org/react';
+import { InvoiceType } from "../../constants/interfracer";
 
-interface Address {
-  street: string,
-  city: string,
-  postcode: string,
-  country: string
-}
-
-interface Item {
-  name: string,
-  quantity: number,
-  price: number,
-  total: number
-}
-
-
-interface Invoice {
-  id: string,
-  createdAt: string,
-  paymentDue: string,
-  description: string,
-  paymentTerms: number,
-  clientName: string,
-  clientEmail: string,
-  status: string,
-  senderAddress: Address,
-  clientAddress: Address,
-  item: Array<Item>,
-  total: number
-}
-
-const IndividualInovide = ({invoiceData}: {invoiceData: Invoice}) => {
-  const { id, createdAt, paymentDue, description, paymentTerms, clientAddress, clientEmail, clientName, senderAddress, item, total, status} = invoiceData;
+const IndividualInovide = ({invoiceData}: {invoiceData: InvoiceType}) => {
+  const { id, createdAt, paymentDue, description, paymentTerms, clientAddress, clientEmail, clientName, senderAddress, items, total, status} = invoiceData;
   return (
     <div className="flex-col">
         <div className="flex items-center bg-[#252945] px-4 py-4 mb-10 rounded-sm rounded overflow-hidden shadow-lg">
@@ -73,6 +41,39 @@ const IndividualInovide = ({invoiceData}: {invoiceData: Invoice}) => {
                 </div>
                 <DisplayDetails type='Sent to' details={clientEmail} />
                 <DisplayDetails type='Payment Due' details={paymentDue} />
+            </div>
+            <div>
+                <Table
+                aria-label="Example table with static content"
+                css={{
+                    height: "auto",
+                    minWidth: "100%",
+                }}
+                >
+                <Table.Header>
+                    <Table.Column css={{ background: 'none' }}>Item Name</Table.Column>
+                    <Table.Column css={{ background: 'none' }}>QTY.</Table.Column>
+                    <Table.Column css={{ background: 'none' }}>Price</Table.Column>
+                    <Table.Column css={{ background: 'none' }}>Total</Table.Column>
+                </Table.Header>
+                <Table.Body>
+                    {items.map((item, index) => {
+                        const { name, quantity, price, total} = item
+                        return (
+                        <Table.Row key={`${index + 1}`}>
+                            <Table.Cell css={{ color: 'White'}}>{name}</Table.Cell>
+                            <Table.Cell css={{ color: 'White'}}>{quantity}</Table.Cell>
+                            <Table.Cell css={{ color: 'White'}}>{price}</Table.Cell>
+                            <Table.Cell css={{ color: 'White'}}>{total}</Table.Cell>
+                        </Table.Row>
+                        )
+                    })}
+                </Table.Body>
+                </Table>
+                <div className="flex">
+                    <span className="flex-1">Amoutn Due</span>
+                    <strong>$2541.10</strong>
+                </div>
             </div>
         </div>
         

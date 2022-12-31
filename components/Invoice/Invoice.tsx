@@ -2,52 +2,33 @@ import React, { useState } from "react";
 import {invoice_dummy_data} from '../../constants/data'
 import DownArrow from '../../assets/icon-arrow-down.svg'
 import DownRight from '../../assets/icon-arrow-right.svg'
+import LeftArrow from '../../assets/icon-arrow-left.svg'
 import IconPlus from '../../assets/icon-plus.svg'
 import IndividualInovide from "./IndividualInovide";
-
-interface Address {
-  street: string,
-  city: string,
-  postcode: string,
-  country: string
-}
-
-interface Item {
-  name: string,
-  quantity: number,
-  price: number,
-  total: number
-}
-
-
-interface Invoice {
-  id: string,
-  createdAt: string,
-  paymentDue: string,
-  description: string,
-  paymentTerms: number,
-  clientName: string,
-  clientEmail: string,
-  status: string,
-  senderAddress: Address,
-  clientAddress: Address,
-  item: Array<Item>,
-  total: number
-}
+import { InvoiceType } from "../../constants/interfracer";
+import Link from "next/link";
 
 const Invoice = () => {
-  const [invoiceDescripiton, setInvoiceDescription] = useState<Invoice>();
+  const [invoiceDescripiton, setInvoiceDescription] = useState<InvoiceType>();
   const handleDisplayInvoiceDescription = (invoice: any) => {
     setInvoiceDescription(invoice)
   }
   return (
-    <div className="max-w-2xl">
+    <>
+    {/* {invoiceDescripiton && (
+      <div className="flex items-center">
+        <span className="cursor-pointer" onClick={() => setInvoiceDescription(undefined)}>
+          <LeftArrow /> 
+        </span>
+        <strong className="pl-2">Go Back</strong>
+      </div>
+    )} */}
     {!invoiceDescripiton ? (
     <div>
       <div className="flex">
         <div className="flex-1">
           <h3>Invoices</h3>
-          <div>There are 7 total invoices.</div>
+          <p>There are 7 total invoices.</p>
         </div>
         <div className="flex flex-1 items-center">
           Filter by status
@@ -66,16 +47,29 @@ const Invoice = () => {
         {invoice_dummy_data.length ? invoice_dummy_data.map((invoice) => {
           const { id, createdAt, clientName, total, status } = invoice
           return (
-            <div className="flex items-center bg-[#252945] px-4 py-4 mb-4 rounded-sm rounded overflow-hidden shadow-lg">
-              <strong className="pr-10">#{id}</strong>
-              <span className="pr-10">{createdAt}</span>
-              <span className="pr-10">{clientName}</span>
-              <span className="pr-10">${total}</span>
-              <span className="pr-10">{status}</span>
-              <span onClick={() => handleDisplayInvoiceDescription(invoice)}>
-                <DownRight />
-              </span>
-            </div>
+            <Link href={`/invoices/id`} passHref>
+              <div className="flex items-center bg-[#252945] px-4 py-4 mb-4 rounded-sm rounded overflow-hidden shadow-lg">
+                <div>
+                  <h5>#{id}</h5>
+                </div>
+                <div>
+                  <h6>{createdAt}</h6>
+                </div>
+                <div>
+                  <p>{clientName}</p>
+                </div>
+                <div>
+                  <h3>${total}</h3>
+                </div>
+                <div>
+                  <span>{status}</span>
+                </div>
+                <span>{createdAt}</span>
+                <span className="cursor-pointer" onClick={() => handleDisplayInvoiceDescription(invoice)}>
+                  <DownRight />
+                </span>
+              </div>
+            </Link>
           )
         }) : (
           <div className="flex-col">
@@ -88,7 +82,7 @@ const Invoice = () => {
     ) : (
       <IndividualInovide invoiceData={invoiceDescripiton} />
     )}
-    </div>
+    </>
   );
 };
 
