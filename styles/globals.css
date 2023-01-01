@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,14 +13,59 @@
     --pending-status-bg: #ff8f00;
     --pending-status-color: #888eb0;
     --draft-bg: #252945;
+    --delete-btn-bg: #ec5757;
+    --edit-btn-bg: #252945;
+
 }
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body{
     background: var(--body-bg);
+}
+
+p{
+    font-size: 0.8rem;
+    /* color: var(--secondary-color); */
+}
+
+button {
+    @apply py-2 px-6 bg-[var(--paid-status-bg)] rounded-md cursor-pointer
+}
+
+.form__group {
+    @apply mb-8
+}
+
+.form__group p{
+    @apply mb-[10px]
+}
+
+.form__group input{
+    @apply py-3 px-5 w-full rounded-[5px] bg-[var(--secondary-color)] border-0 outline-0 cursor-pointer
+}
+
+.inline_from-group{
+    @apply flex items-center justify-between gap-4
+}
+
+.inline_group{
+    @apply w-[48%]
+}
+
+.add__item-btn{
+    @apply w-full bg-[var(--secondary-color)] py-[10px] px-[25px] mt-[50px] rounded-[50px] border-0 outline-0
+}
+
+.draft__btn{
+    @apply bg-[#1f2c3f] mr-5
+}
+
+.new__invoice__btns{
+    @apply flex justify-between mt-[100px]
 }

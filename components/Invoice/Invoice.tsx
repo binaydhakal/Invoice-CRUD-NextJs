@@ -4,9 +4,9 @@ import DownArrow from '../../assets/icon-arrow-down.svg'
 import DownRight from '../../assets/icon-arrow-right.svg'
 import LeftArrow from '../../assets/icon-arrow-left.svg'
 import IconPlus from '../../assets/icon-plus.svg'
-import IndividualInovide from "./IndividualInovide";
 import { InvoiceType } from "../../constants/interfracer";
-import Link from "next/link";
+import { getStatusColor } from "../../utilities";
+import InvoiceDetails from "./InvoiceDetails";
 
 const Invoice = () => {
   const [invoiceDescripiton, setInvoiceDescription] = useState<InvoiceType>();
@@ -14,29 +14,27 @@ const Invoice = () => {
     setInvoiceDescription(invoice)
   }
   return (
-    <>
-    {/* {invoiceDescripiton && (
-      <div className="flex items-center">
-        <span className="cursor-pointer" onClick={() => setInvoiceDescription(undefined)}>
-          <LeftArrow /> 
-        </span>
+    <div  className="top-0 w-[87%] m-10">
+    {invoiceDescripiton && (
+      <div className="flex items-center cursor-pointer mb-8"  onClick={() => setInvoiceDescription(undefined)}>
+          <LeftArrow />
         <strong className="pl-2">Go Back</strong>
       </div>
-    )} */}
+    )}
     {!invoiceDescripiton ? (
     <div>
-      <div className="flex">
-        <div className="flex-1">
-          <h3>Invoices</h3>
+      <div className="flex items-center justify-between mb-12">
+        <div>
+          <h3 className="text-white">Invoices</h3>
           <p>There are 7 total invoices.</p>
         </div>
-        <div className="flex flex-1 items-center">
+        <div className="flex items-center">
           Filter by status
           <DownArrow />
         </div>
-        <div className="flex-1 text-white">
+        <div className="text-white">
           <button className="flex items-center bg-blue-500 pl-1 pr-4 py-2 rounded-3xl">
-            <div className="bg-white items-center p-2 rounded-xl mr-4">
+            <div className="bg-white items-center p-2 rounded-sm mr-4">
               <IconPlus />
             </div>
             New Invoice
@@ -47,8 +45,8 @@ const Invoice = () => {
         {invoice_dummy_data.length ? invoice_dummy_data.map((invoice) => {
           const { id, createdAt, clientName, total, status } = invoice
           return (
-            <Link href={`/invoices/id`} passHref>
-              <div className="flex items-center bg-[#252945] px-4 py-4 mb-4 rounded-sm rounded overflow-hidden shadow-lg">
+            // <Link href={`/invoices/id`} passHref>
+              <div className="flex items-center justify-between rounded-xl p-7 bg-[var(--secondary-color)] mb-8 transition hover:border-[var(--primary-color)] hover:border hover:scale-y-110 cursor-pointer"  onClick={() => handleDisplayInvoiceDescription(invoice)}>
                 <div>
                   <h5>#{id}</h5>
                 </div>
@@ -62,14 +60,14 @@ const Invoice = () => {
                   <h3>${total}</h3>
                 </div>
                 <div>
-                  <span>{status}</span>
+                  <button className={`py-2.5 px-6 w-24 rounded-md text-sm border-0 outline-0 cursor-pointer font-medium ${getStatusColor(status)}`}>{status}</button>
                 </div>
                 <span>{createdAt}</span>
-                <span className="cursor-pointer" onClick={() => handleDisplayInvoiceDescription(invoice)}>
+                <span className="cursor-pointer">
                   <DownRight />
                 </span>
               </div>
-            </Link>
+            // </Link>
           )
         }) : (
           <div className="flex-col">
@@ -80,9 +78,9 @@ const Invoice = () => {
       </div>
     </div>
     ) : (
-      <IndividualInovide invoiceData={invoiceDescripiton} />
+      <InvoiceDetails invoiceData={invoiceDescripiton} />
     )}
-    </>
+    </div>
   );
 };
 

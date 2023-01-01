@@ -1,5 +1,6 @@
 import React from 'react'
-import SideBar from '../Invoice/SideBar/SideBar'
+import CrudInvoice from '../Invoice/CrudInvoice'
+import SideBar from '../SideBar/SideBar'
 
 interface Props {
     children?: React.ReactNode
@@ -7,9 +8,10 @@ interface Props {
 
 const Layout = (props: Props) => {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-row text-white'>
         <SideBar />
-        <div>{props.children}</div>
+        <CrudInvoice />
+        {/* {props.children} */}
     </div>
   )
 }
