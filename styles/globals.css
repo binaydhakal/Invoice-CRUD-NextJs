@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -27,12 +27,12 @@ html{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'League Spartan', sans-serif;
 }
 
 body{
     background: var(--body-bg);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'League Spartan', sans-serif;
     font-size: .875rem;
 }
 
@@ -40,12 +40,46 @@ h1,h2,h3,h4,h5,h6{
     font-weight:  600;
 }
 
+h1 {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.1;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: -0.63;
+}
+
+h3 {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.8;
+}
+
+h4 {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25;
+}
+
+
+
+p {
+    font-weight: 300;
+}
+
+strong {
+    font-weight: 600;
+}
+
 button {
-    @apply py-2 px-6 bg-[var(--paid-status-bg)] rounded-md cursor-pointer
+    @apply py-2 px-6 bg-[var(--paid-status-bg)] rounded-md cursor-pointer font-semibold
 }
 
 .form__group {
-    @apply mb-8
+    @apply mb-8 items-center
 }
 
 .form__group p{
@@ -65,7 +99,7 @@ button {
 }
 
 .add__item-btn{
-    @apply w-full bg-[var(--secondary-color)] py-[10px] px-[25px] mt-[50px] rounded-[50px] border-0 outline-0
+    @apply flex items-center justify-center w-full bg-[var(--secondary-color)] py-[10px] px-[25px] rounded-[50px] border-0 outline-0
 }
 
 .draft__btn{
@@ -73,7 +107,7 @@ button {
 }
 
 .new__invoice__btns{
-    @apply flex justify-between px-10 pt-10 pb-4 z-[99] bg-[var(--secondary-color)] rounded-t-3xl shadow-lg
+    @apply flex justify-between pt-10 pb-4 z-[999] bg-[var(--secondary-color)] rounded-t-3xl shadow-lg
 }
 
 ::-webkit-scrollbar {

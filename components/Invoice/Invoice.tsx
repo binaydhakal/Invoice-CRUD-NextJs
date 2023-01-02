@@ -9,6 +9,7 @@ import { getStatusColor } from "../../utilities";
 import InvoiceDetails from "./InvoiceDetails";
 import { getInvoiceContext } from "../../contexts/Invoice";
 import { currentInvoiceState } from "../../store/slices/invoiceSlice";
+import EmptyInvoice from "./EmptyInvoice";
 
 const Invoice = () => {
   const [invoicesList, setInvoicesList] = useState<InvoiceType[]>([]);
@@ -25,17 +26,17 @@ const Invoice = () => {
   return (
     <div  className="top-0 w-[87%] m-10 absolute left-[10%]">
     {invoiceDescripiton && (
-      <div className="flex items-center cursor-pointer mb-8"  onClick={() => setInvoiceDescription(undefined)}>
+      <div className="flex items-center cursor-pointer mb-8 gap-2"  onClick={() => setInvoiceDescription(undefined)}>
           <LeftArrow />
-        <strong className="pl-2">Go Back</strong>
+        <strong>Go Back</strong>
       </div>
     )}
     {!invoiceDescripiton ? (
     <div>
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h3 className="text-white">Invoices</h3>
-          <p>There are {invoices.invoices.length} total invoices.</p>
+          <h2 className="text-white">Invoices</h2>
+          <p>{invoicesList.length ? `There are ${invoicesList.length} total invoices.` : 'No Invoices'}</p>
         </div>
         <div className="flex items-center gap-1">
           <h2>Filter by status</h2>
@@ -68,8 +69,9 @@ const Invoice = () => {
                 <div>
                   <h3>${total}</h3>
                 </div>
-                <div>
-                  <button className={`py-2.5 px-6 w-24 rounded-md text-sm border-0 outline-0 cursor-pointer font-medium ${getStatusColor(status)}`}>{status}</button>
+                <div className={`flex flex-row items-center justify-center py-1.5 px-3 w-24 rounded-md text-center border-0 outline-0 capitalize text-[var(--pending-status-bg)] bg-[var(--pending-status-color)] gap-1`}>
+                  <div className="h-[10px] w-[10px] rounded-[50%] bg-[var(--pending-status-bg)] mb-[2px]" />
+                  {status}
                 </div>
                 <span>{createdAt}</span>
                 <span className="cursor-pointer">
@@ -78,12 +80,7 @@ const Invoice = () => {
               </div>
             // </Link>
           )
-        }) : (
-          <div className="flex-col">
-            <h4>There is nothing here</h4>
-            <span>{'Create an invoice by clicking the \n'}<strong>New Invoice</strong> button and get started</span>
-          </div>
-        )}
+        }) : <EmptyInvoice />}
       </div>
     </div>
     ) : (
