@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {invoice_dummy_data} from '../../constants/data'
 import DownArrow from '../../assets/icon-arrow-down.svg'
 import DownRight from '../../assets/icon-arrow-right.svg'
@@ -7,14 +7,23 @@ import IconPlus from '../../assets/icon-plus.svg'
 import { InvoiceType } from "../../constants/interfracer";
 import { getStatusColor } from "../../utilities";
 import InvoiceDetails from "./InvoiceDetails";
+import { getInvoiceContext } from "../../contexts/Invoice";
+import { currentInvoiceState } from "../../store/slices/invoiceSlice";
 
 const Invoice = () => {
+  const [invoicesList, setInvoicesList] = useState<InvoiceType[]>([]);
   const [invoiceDescripiton, setInvoiceDescription] = useState<InvoiceType>();
+  const invoices = currentInvoiceState()
+  const { setDisplayData } = getInvoiceContext();
   const handleDisplayInvoiceDescription = (invoice: any) => {
     setInvoiceDescription(invoice)
   }
+  useEffect(() => {
+    setInvoicesList(invoices.invoices)
+  }, [invoices.invoices])
+  
   return (
-    <div  className="top-0 w-[87%] m-10">
+    <div  className="top-0 w-[87%] m-10 absolute left-[10%]">
     {invoiceDescripiton && (
       <div className="flex items-center cursor-pointer mb-8"  onClick={() => setInvoiceDescription(undefined)}>
           <LeftArrow />
@@ -26,15 +35,15 @@ const Invoice = () => {
       <div className="flex items-center justify-between mb-12">
         <div>
           <h3 className="text-white">Invoices</h3>
-          <p>There are 7 total invoices.</p>
+          <p>There are {invoices.invoices.length} total invoices.</p>
         </div>
-        <div className="flex items-center">
-          Filter by status
+        <div className="flex items-center gap-1">
+          <h2>Filter by status</h2>
           <DownArrow />
         </div>
         <div className="text-white">
-          <button className="flex items-center bg-blue-500 pl-1 pr-4 py-2 rounded-3xl">
-            <div className="bg-white items-center p-2 rounded-sm mr-4">
+          <button className="flex items-center bg-blue-500 pl-1 pr-4 py-2 rounded-3xl" onClick={() => setDisplayData({add: 'adding'})}>
+            <div className="bg-white items-center p-2 rounded-2xl mr-4">
               <IconPlus />
             </div>
             New Invoice
@@ -42,11 +51,11 @@ const Invoice = () => {
         </div>
       </div>
       <div>
-        {invoice_dummy_data.length ? invoice_dummy_data.map((invoice) => {
+        {invoicesList.length ? invoicesList.map((invoice) => {
           const { id, createdAt, clientName, total, status } = invoice
           return (
             // <Link href={`/invoices/id`} passHref>
-              <div className="flex items-center justify-between rounded-xl p-7 bg-[var(--secondary-color)] mb-8 transition hover:border-[var(--primary-color)] hover:border hover:scale-y-110 cursor-pointer"  onClick={() => handleDisplayInvoiceDescription(invoice)}>
+              <div key={invoice?.id} className="flex items-center justify-between rounded-xl p-7 bg-[var(--secondary-color)] mb-8 transition hover:border-[var(--primary-color)] hover:border hover:scale-y-110 cursor-pointer"  onClick={() => handleDisplayInvoiceDescription(invoice)}>
                 <div>
                   <h5>#{id}</h5>
                 </div>
@@ -78,7 +87,7 @@ const Invoice = () => {
       </div>
     </div>
     ) : (
-      <InvoiceDetails invoiceData={invoiceDescripiton} />
+      <InvoiceDetails invoiceData={invoiceDescripiton} onBack={() => setInvoiceDescription(undefined)} />
     )}
     </div>
   );
