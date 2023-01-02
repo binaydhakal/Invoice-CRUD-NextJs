@@ -1,5 +1,4 @@
 import React from 'react'
-import CrudInvoice from '../Invoice/CrudInvoice'
 import SideBar from '../SideBar/SideBar'
 
 interface Props {
@@ -10,8 +9,7 @@ const Layout = (props: Props) => {
   return (
     <div className='flex flex-row text-white'>
         <SideBar />
-        <CrudInvoice />
-        {/* {props.children} */}
+        {props.children}
     </div>
   )
 }
