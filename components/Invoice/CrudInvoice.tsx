@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
+import DeleteIcon from '../../assets/icon-delete.svg'
+import AddIcon from '../../assets/icon-plus.svg'
 import { InvoiceType, Item } from '../../constants/interfracer';
 import { getInvoiceContext } from '../../contexts/Invoice';
 import { createInvoice, updateInvoice } from '../../store/slices/invoiceSlice';
@@ -51,7 +53,9 @@ const CrudInvoice = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const { name, value } = event.target;
     const list: any = [ ...items ]
-    list[i][name] = value
+    const list_change = { ...list[i] }
+    list_change[name] = value;
+    list[i] = list_change
     list[i]['total'] = list[i]['quantity'] * list[i]['price']
     setItems(list)
   }
@@ -78,13 +82,13 @@ const CrudInvoice = () => {
 
   return (
     <div className='main_container z-[999] fixed left-28 bg-[#00000066] w-[94%]'>
-         <div className="new_invoice flex flex-col h-[100vh] p-10  w-[650px] bg-[var(--body-bg)]">
+         <div className="new_invoice flex flex-col h-[100vh] px-10 pt-10  w-[650px] bg-[var(--body-bg)]">
             <div className="new_invoice-header flex-shrink-0 mb-8">
-                <h3>{`${displayData?.id ? `Edit #${displayData?.id}` : 'New Invoice'}`}</h3>
+                <h2>{`${displayData?.id ? `Edit #${displayData?.id}` : 'New Invoice'}`}</h2>
             </div>
             <div className="new_invoice-body flex-1 pb-10 pr-5 overflow-y-scroll">
                 <div className="bill_from">
-                    <p className="bill_title mb-5">Bill From</p>
+                    <h3 className="bill_title mb-5">Bill From</h3>
                     <div className="form__group">
                         <p>Street Address</p>
                         <input type='text' name="senderAddress.street" defaultValue={senderAddress.street} onChange={handleInputChange} />
@@ -108,7 +112,7 @@ const CrudInvoice = () => {
                 </div>
 
                 <div className="bill_to mt-12">
-                    <p className="bill_title">Bill To</p>
+                    <h3 className="bill_title">Bill To</h3>
                     <div className="form__group">
                         <p>Client Name</p>
                         <input type='text' name="clientName" defaultValue={clientName} onChange={handleInputChange} />
@@ -163,38 +167,40 @@ const CrudInvoice = () => {
                                 <div className="form__group inline_from-group">
                                     <div>
                                         <p>Item Name</p>
-                                        <input type="text" defaultValue={item.name} name="name" onChange={e => handleChange(e,i)} />
+                                        <input type="text" value={item.name} name="name" onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Qty</p>
-                                        <input type="number" name="quantity" defaultValue={item.quantity || 0} onChange={e => handleChange(e,i)} />
+                                        <input type="number" name="quantity" value={item.quantity} onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Price</p>
-                                        <input type="number" name="price" defaultValue={item.price || 0} onChange={e => handleChange(e,i)} />
+                                        <input type="number" name="price" value={item.price} onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Total</p>
                                         <h4>{item?.total}</h4>
                                     </div>
-
-                                    <button className="edit__btn" onClick={() => removeItem(i)}>Delete</button>
+                                    <div className="mx-4 cursor-pointer" onClick={() => removeItem(i)}>
+                                        <DeleteIcon />
+                                    </div>
                                 </div>
                             </div>
                         )
                     })}
                 </div>
 
-                <button className="add__item-btn" onClick={addItem}>Add New Item</button>
+                <button className="add__item-btn" onClick={addItem}><AddIcon />Add New Item</button>
             </div>
-            <div className="new__invoice__btns flex-shrink-0">
-                <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={() => setDisplayData(undefined)}>Discard</button>
-                <div>
-                    <button className="draft__btn rounded-3xl" onClick={() => handleSaveAsDraft()}>Save as Draft</button>
-                    <button className="mark__as-btn bg-[var(--primary-color)] rounded-3xl" onClick={() => handleSendAndSave()}>Send & Save</button>
+            <div className={`new__invoice__btns flex-shrink-0 p-4`}>
+                {!isEditInvoice && <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={() => setDisplayData(undefined)}>Discard</button>}
+                <div className={isEditInvoice ? 'right-0' : ''}>
+                    {isEditInvoice ? <button className="draft__btn rounded-3xl" onClick={() => setDisplayData(undefined)}>Cancel</button> :
+                    <button className="draft__btn rounded-3xl" onClick={() => handleSaveAsDraft()}>Save as Draft</button>}
+                    <button className="mark__as-btn bg-[var(--primary-color)] rounded-3xl" onClick={() => handleSendAndSave()}>{isEditInvoice ? 'Save Changes' : 'Send & Save'}</button>
                 </div>
             </div>
          </div>

@@ -5,10 +5,12 @@ import DownRight from '../../assets/icon-arrow-right.svg'
 import LeftArrow from '../../assets/icon-arrow-left.svg'
 import IconPlus from '../../assets/icon-plus.svg'
 import { InvoiceType } from "../../constants/interfracer";
-import { getStatusColor } from "../../utilities";
+import { formatDate, getStatusColor } from "../../utilities";
 import InvoiceDetails from "./InvoiceDetails";
 import { getInvoiceContext } from "../../contexts/Invoice";
 import { currentInvoiceState } from "../../store/slices/invoiceSlice";
+import EmptyInvoice from "./EmptyInvoice";
+import Status from "./Status";
 
 const Invoice = () => {
   const [invoicesList, setInvoicesList] = useState<InvoiceType[]>([]);
@@ -25,17 +27,17 @@ const Invoice = () => {
   return (
     <div  className="top-0 w-[87%] m-10 absolute left-[10%]">
     {invoiceDescripiton && (
-      <div className="flex items-center cursor-pointer mb-8"  onClick={() => setInvoiceDescription(undefined)}>
+      <div className="flex items-center cursor-pointer mb-8 gap-2"  onClick={() => setInvoiceDescription(undefined)}>
           <LeftArrow />
-        <strong className="pl-2">Go Back</strong>
+        <strong>Go Back</strong>
       </div>
     )}
     {!invoiceDescripiton ? (
     <div>
       <div className="flex items-center justify-between mb-12">
         <div>
-          <h3 className="text-white">Invoices</h3>
-          <p>There are {invoices.invoices.length} total invoices.</p>
+          <h2 className="text-white">Invoices</h2>
+          <p>{invoicesList.length ? `There are ${invoicesList.length} total invoices.` : 'No Invoices'}</p>
         </div>
         <div className="flex items-center gap-1">
           <h2>Filter by status</h2>
@@ -52,38 +54,30 @@ const Invoice = () => {
       </div>
       <div>
         {invoicesList.length ? invoicesList.map((invoice) => {
-          const { id, createdAt, clientName, total, status } = invoice
+          const { id, createdAt, clientName, total, status,paymentDue } = invoice
           return (
             // <Link href={`/invoices/id`} passHref>
               <div key={invoice?.id} className="flex items-center justify-between rounded-xl p-7 bg-[var(--secondary-color)] mb-8 transition hover:border-[var(--primary-color)] hover:border hover:scale-y-110 cursor-pointer"  onClick={() => handleDisplayInvoiceDescription(invoice)}>
                 <div>
-                  <h5>#{id}</h5>
+                  <h2>#{id}</h2>
                 </div>
                 <div>
-                  <h6>{createdAt}</h6>
+                  <h6>Due   {formatDate(paymentDue)}</h6>
                 </div>
                 <div>
-                  <p>{clientName}</p>
+                  <p className="font-medium">{clientName}</p>
                 </div>
                 <div>
-                  <h3>${total}</h3>
+                  <h2 className="font-bold">€{total}</h2>
                 </div>
-                <div>
-                  <button className={`py-2.5 px-6 w-24 rounded-md text-sm border-0 outline-0 cursor-pointer font-medium ${getStatusColor(status)}`}>{status}</button>
-                </div>
-                <span>{createdAt}</span>
-                <span className="cursor-pointer">
+                <div className="flex items-center gap-3 cursor-pointer">
+                  <Status status={status} />
                   <DownRight />
-                </span>
+                </div>
               </div>
             // </Link>
           )
-        }) : (
-          <div className="flex-col">
-            <h4>There is nothing here</h4>
-            <span>{'Create an invoice by clicking the \n'}<strong>New Invoice</strong> button and get started</span>
-          </div>
-        )}
+        }) : <EmptyInvoice />}
       </div>
     </div>
     ) : (

@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { InvoiceType, Item } from '../../constants/interfracer'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
-import { getRandomId } from '../../utilities'
+import { getRandomId, getRandomUniqueId } from '../../utilities'
 
 const initialState: Array<InvoiceType> = []
 
@@ -16,7 +16,7 @@ export const invoiceSlice = createSlice({
     },
     createInvoice: (state, action) => {
       const { items } = action.payload
-      const id = getRandomId()
+      const id = getRandomUniqueId()
       let total: number = 0;
       items?.map((item: Item) => total = item.total + total);
       const new_item = { ...action.payload, id, total }

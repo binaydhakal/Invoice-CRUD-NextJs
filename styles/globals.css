@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,8 +16,9 @@ html{
     --body-bg: #141625;
     --paid-status-bg: #1f2c3f;
     --paid-status-color: #32cf9b;
-    --pending-status-bg: #ff8f00;
-    --pending-status-color: #888eb0;
+    --pending-status-bg: rgba(255, 143, 0, 0.06);
+    --pending-status-color: #ff8f00;
+    --small-text-color: #888eb0;
     --draft-bg: #252945;
     --delete-btn-bg: #ec5757;
     --edit-btn-bg: #252945;
@@ -27,12 +28,12 @@ html{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'League Spartan', sans-serif;
 }
 
 body{
     background: var(--body-bg);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'League Spartan', sans-serif;
     font-size: .875rem;
 }
 
@@ -40,12 +41,46 @@ h1,h2,h3,h4,h5,h6{
     font-weight:  600;
 }
 
+h1 {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.1;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: -0.63;
+}
+
+h3 {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: -0.8;
+}
+
+h4 {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25;
+}
+
+
+
+p {
+    font-weight: 300;
+}
+
+strong {
+    font-weight: 600;
+}
+
 button {
-    @apply py-2 px-6 bg-[var(--paid-status-bg)] rounded-md cursor-pointer
+    @apply py-2 px-6 bg-[var(--paid-status-bg)] rounded-md cursor-pointer font-semibold
 }
 
 .form__group {
-    @apply mb-8
+    @apply mb-8 items-center
 }
 
 .form__group p{
@@ -65,15 +100,39 @@ button {
 }
 
 .add__item-btn{
-    @apply w-full bg-[var(--secondary-color)] py-[10px] px-[25px] mt-[50px] rounded-[50px] border-0 outline-0
+    @apply flex items-center justify-center w-full bg-[var(--secondary-color)] py-[10px] px-[25px] rounded-[50px] border-0 outline-0
 }
 
 .draft__btn{
     @apply bg-[#1f2c3f] mr-5
 }
 
+.paid_status {
+    @apply bg-[var(--paid-status-bg)] text-[var(--paid-status-color)]
+}
+
+.paid_status div {
+    @apply bg-[var(--paid-status-color)]
+}
+
+.pending_status {
+    @apply bg-[var(--pending-status-bg)] text-[var(--pending-status-color)]
+}
+
+.pending_status div {
+    @apply bg-[var(--pending-status-color)]
+}
+
+.draft_status {
+    @apply bg-[#1f2c3f] text-[var(--small-text-color)]
+}
+
+.draft_status div {
+    @apply bg-[var(--small-text-color)]
+}
+
 .new__invoice__btns{
-    @apply flex justify-between px-10 pt-10 pb-4 z-[99] bg-[var(--secondary-color)] rounded-t-3xl shadow-lg
+    @apply flex justify-between pt-10 pb-4 z-[999] bg-[var(--secondary-color)] rounded-t-3xl shadow-lg
 }
 
 ::-webkit-scrollbar {
