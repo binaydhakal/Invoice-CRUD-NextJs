@@ -53,7 +53,9 @@ const CrudInvoice = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const { name, value } = event.target;
     const list: any = [ ...items ]
-    list[i][name] = value
+    const list_change = { ...list[i] }
+    list_change[name] = value;
+    list[i] = list_change
     list[i]['total'] = list[i]['quantity'] * list[i]['price']
     setItems(list)
   }
@@ -165,24 +167,24 @@ const CrudInvoice = () => {
                                 <div className="form__group inline_from-group">
                                     <div>
                                         <p>Item Name</p>
-                                        <input type="text" defaultValue={item.name} name="name" onChange={e => handleChange(e,i)} />
+                                        <input type="text" value={item.name} name="name" onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Qty</p>
-                                        <input type="number" name="quantity" defaultValue={item.quantity} onChange={e => handleChange(e,i)} />
+                                        <input type="number" name="quantity" value={item.quantity} onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Price</p>
-                                        <input type="number" name="price" defaultValue={item.price} onChange={e => handleChange(e,i)} />
+                                        <input type="number" name="price" value={item.price} onChange={e => handleChange(e,i)} />
                                     </div>
 
                                     <div>
                                         <p>Total</p>
                                         <h4>{item?.total}</h4>
                                     </div>
-                                    <div className="mx-4" onClick={() => removeItem(i)}>
+                                    <div className="mx-4 cursor-pointer" onClick={() => removeItem(i)}>
                                         <DeleteIcon />
                                     </div>
                                 </div>
@@ -193,7 +195,7 @@ const CrudInvoice = () => {
 
                 <button className="add__item-btn" onClick={addItem}><AddIcon />Add New Item</button>
             </div>
-            <div className={`new__invoice__btns flex-shrink-0`}>
+            <div className={`new__invoice__btns flex-shrink-0 p-4`}>
                 {!isEditInvoice && <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={() => setDisplayData(undefined)}>Discard</button>}
                 <div className={isEditInvoice ? 'right-0' : ''}>
                     {isEditInvoice ? <button className="draft__btn rounded-3xl" onClick={() => setDisplayData(undefined)}>Cancel</button> :

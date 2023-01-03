@@ -16,8 +16,9 @@ html{
     --body-bg: #141625;
     --paid-status-bg: #1f2c3f;
     --paid-status-color: #32cf9b;
-    --pending-status-bg: #ff8f00;
-    --pending-status-color: #888eb0;
+    --pending-status-bg: rgba(255, 143, 0, 0.06);
+    --pending-status-color: #ff8f00;
+    --small-text-color: #888eb0;
     --draft-bg: #252945;
     --delete-btn-bg: #ec5757;
     --edit-btn-bg: #252945;
@@ -104,6 +105,30 @@ button {
 
 .draft__btn{
     @apply bg-[#1f2c3f] mr-5
+}
+
+.paid_status {
+    @apply bg-[var(--paid-status-bg)] text-[var(--paid-status-color)]
+}
+
+.paid_status div {
+    @apply bg-[var(--paid-status-color)]
+}
+
+.pending_status {
+    @apply bg-[var(--pending-status-bg)] text-[var(--pending-status-color)]
+}
+
+.pending_status div {
+    @apply bg-[var(--pending-status-color)]
+}
+
+.draft_status {
+    @apply bg-[#1f2c3f] text-[var(--small-text-color)]
+}
+
+.draft_status div {
+    @apply bg-[var(--small-text-color)]
 }
 
 .new__invoice__btns{

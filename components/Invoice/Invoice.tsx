@@ -5,11 +5,12 @@ import DownRight from '../../assets/icon-arrow-right.svg'
 import LeftArrow from '../../assets/icon-arrow-left.svg'
 import IconPlus from '../../assets/icon-plus.svg'
 import { InvoiceType } from "../../constants/interfracer";
-import { getStatusColor } from "../../utilities";
+import { formatDate, getStatusColor } from "../../utilities";
 import InvoiceDetails from "./InvoiceDetails";
 import { getInvoiceContext } from "../../contexts/Invoice";
 import { currentInvoiceState } from "../../store/slices/invoiceSlice";
 import EmptyInvoice from "./EmptyInvoice";
+import Status from "./Status";
 
 const Invoice = () => {
   const [invoicesList, setInvoicesList] = useState<InvoiceType[]>([]);
@@ -53,30 +54,26 @@ const Invoice = () => {
       </div>
       <div>
         {invoicesList.length ? invoicesList.map((invoice) => {
-          const { id, createdAt, clientName, total, status } = invoice
+          const { id, createdAt, clientName, total, status,paymentDue } = invoice
           return (
             // <Link href={`/invoices/id`} passHref>
               <div key={invoice?.id} className="flex items-center justify-between rounded-xl p-7 bg-[var(--secondary-color)] mb-8 transition hover:border-[var(--primary-color)] hover:border hover:scale-y-110 cursor-pointer"  onClick={() => handleDisplayInvoiceDescription(invoice)}>
                 <div>
-                  <h5>#{id}</h5>
+                  <h2>#{id}</h2>
                 </div>
                 <div>
-                  <h6>{createdAt}</h6>
+                  <h6>Due   {formatDate(paymentDue)}</h6>
                 </div>
                 <div>
-                  <p>{clientName}</p>
+                  <p className="font-medium">{clientName}</p>
                 </div>
                 <div>
-                  <h3>${total}</h3>
+                  <h2 className="font-bold">€{total}</h2>
                 </div>
-                <div className={`flex flex-row items-center justify-center py-1.5 px-3 w-24 rounded-md text-center border-0 outline-0 capitalize text-[var(--pending-status-bg)] bg-[var(--pending-status-color)] gap-1`}>
-                  <div className="h-[10px] w-[10px] rounded-[50%] bg-[var(--pending-status-bg)] mb-[2px]" />
-                  {status}
-                </div>
-                <span>{createdAt}</span>
-                <span className="cursor-pointer">
+                <div className="flex items-center gap-3 cursor-pointer">
+                  <Status status={status} />
                   <DownRight />
-                </span>
+                </div>
               </div>
             // </Link>
           )

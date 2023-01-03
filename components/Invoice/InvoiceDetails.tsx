@@ -5,6 +5,7 @@ import { getInvoiceContext } from "../../contexts/Invoice";
 import { currentInvoiceState, deleteInvoice, updateInvoice } from "../../store/slices/invoiceSlice";
 import { getStatusColor, initialInvoice } from "../../utilities";
 import Modal from "../modals/Modal";
+import Status from "./Status";
 
 const InvoiceDetails = ({invoiceData, onBack}: {invoiceData: InvoiceType; onBack: any}) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
@@ -32,10 +33,10 @@ const InvoiceDetails = ({invoiceData, onBack}: {invoiceData: InvoiceType; onBack
         <div className="flex items-center justify-between p-7 rounded-lg mb-8 bg-[var(--secondary-color)] overflow-hidden shadow-lg">
             <div className="flex items-center gap-x-6">
                 <h3>Status</h3>
-                <div className={`${getStatusColor(status)} capitalize text-lg`}>{status}</div>
+                <Status status={status} />
             </div> 
             <div className="flex items-center gap-x-4">
-                <button className="bg-[var(--edit-btn-bg)] p-[12px] rounded-2xl" onClick={() => setDisplayData(invoiceData)}>Edit</button>
+                <button className="bg-[var(--edit-btn-bg)] p-[12px] rounded-2xl" onClick={() => setDisplayData(invoiceDescripiton)}>Edit</button>
                 <button className="bg-[var(--delete-btn-bg)] p-[12px] rounded-2xl" onClick={() => setModalOpen(true)}>Delete</button>
                 {!(status === 'paid') && <button className="bg-[var(--primary-color)] p-[12px] rounded-2xl"  onClick={() => dispatch(updateInvoice({ ...invoiceDescripiton, status: 'paid' }))}>Mark as Paid</button>}
             </div>
