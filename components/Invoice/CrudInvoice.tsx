@@ -81,8 +81,12 @@ const CrudInvoice = () => {
   }
 
   return (
-    <div className='main_container z-[999] fixed left-28 bg-[#00000066] w-[94%]'>
-         <div className="new_invoice flex flex-col h-[100vh]  w-[650px] bg-[var(--body-bg)]">
+    <div className={`fixed left-28 bg-[#00000066] ${displayData ? 'main_container_active' : 'main_container'}`}>
+         <div className={`new_invoice flex flex-col h-[100vh]  w-[650px] bg-[var(--body-bg)]`}
+            style={{
+                transform: !displayData ? 'translateX(-100%)' : 'translateX(0)'
+            }}
+         >
             <div className="new_invoice-header px-10 pt-10 flex-shrink-0 mb-8">
                 <h2>{`${displayData?.id ? `Edit #${displayData?.id}` : 'New Invoice'}`}</h2>
             </div>
