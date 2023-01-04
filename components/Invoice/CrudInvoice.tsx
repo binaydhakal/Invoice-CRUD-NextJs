@@ -82,11 +82,11 @@ const CrudInvoice = () => {
 
   return (
     <div className='main_container z-[999] fixed left-28 bg-[#00000066] w-[94%]'>
-         <div className="new_invoice flex flex-col h-[100vh] px-10 pt-10  w-[650px] bg-[var(--body-bg)]">
-            <div className="new_invoice-header flex-shrink-0 mb-8">
+         <div className="new_invoice flex flex-col h-[100vh]  w-[650px] bg-[var(--body-bg)]">
+            <div className="new_invoice-header px-10 pt-10 flex-shrink-0 mb-8">
                 <h2>{`${displayData?.id ? `Edit #${displayData?.id}` : 'New Invoice'}`}</h2>
             </div>
-            <div className="new_invoice-body flex-1 pb-10 pr-5 overflow-y-scroll">
+            <div className="new_invoice-body px-10 pt-5 pb-3 flex-1 overflow-y-scroll">
                 <div className="bill_from">
                     <h3 className="bill_title mb-5">Bill From</h3>
                     <div className="form__group">
@@ -195,9 +195,9 @@ const CrudInvoice = () => {
 
                 <button className="add__item-btn" onClick={addItem}><AddIcon />Add New Item</button>
             </div>
-            <div className={`new__invoice__btns flex-shrink-0 p-4`}>
+            <div className={`new__invoice__btns flex-shrink-0 p-4 flex justify-between gap-x-2`}>
                 {!isEditInvoice && <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={() => setDisplayData(undefined)}>Discard</button>}
-                <div className={isEditInvoice ? 'right-0' : ''}>
+                <div className='flex flex-1 justify-end'>
                     {isEditInvoice ? <button className="draft__btn rounded-3xl" onClick={() => setDisplayData(undefined)}>Cancel</button> :
                     <button className="draft__btn rounded-3xl" onClick={() => handleSaveAsDraft()}>Save as Draft</button>}
                     <button className="mark__as-btn bg-[var(--primary-color)] rounded-3xl" onClick={() => handleSendAndSave()}>{isEditInvoice ? 'Save Changes' : 'Send & Save'}</button>
