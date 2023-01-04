@@ -12,7 +12,7 @@ const SideBar = () => {
       <div className='flex flex-col justify-between w-full h-full'>
         <div className='w-full h-24 flex items-center justify-center bg-[var(--primary-color)] rounded-r-2xl'>
           <div>
-            <h2>Muhib</h2>
+            <h2>Binaya</h2>
           </div>
         </div>
         <div className='w-full h-24 flex items-center justify-center rounded-r-2xl border-t border-[var(--primary-color)]'>
@@ -20,7 +20,7 @@ const SideBar = () => {
         </div>
       </div>
     </div>
-    {displayData && <CrudInvoice />}
+    <CrudInvoice />
     </>
   )
 }

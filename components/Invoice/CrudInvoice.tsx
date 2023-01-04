@@ -65,6 +65,11 @@ const CrudInvoice = () => {
     copy_data.splice(i, 1);
     setItems(copy_data);
   }
+
+  const discardAndCancel = () => {
+    setDisplayData(undefined)
+    setInoviceDetails(initialInvoice);
+  }
   
   const handleSendAndSave = () => {
     const new_item = { ...inoviceDetails, items, status: 'paid' }
@@ -81,8 +86,12 @@ const CrudInvoice = () => {
   }
 
   return (
-    <div className='main_container z-[999] fixed left-28 bg-[#00000066] w-[94%]'>
-         <div className="new_invoice flex flex-col h-[100vh]  w-[650px] bg-[var(--body-bg)]">
+    <div className={`fixed left-28 bg-[#00000066] ${displayData ? 'main_container_active' : 'main_container'}`}>
+         <div className={`new_invoice flex flex-col h-[100vh]  w-[650px] bg-[var(--body-bg)]`}
+            style={{
+                transform: !displayData ? 'translateX(-100%)' : 'translateX(0)'
+            }}
+         >
             <div className="new_invoice-header px-10 pt-10 flex-shrink-0 mb-8">
                 <h2>{`${displayData?.id ? `Edit #${displayData?.id}` : 'New Invoice'}`}</h2>
             </div>
@@ -196,9 +205,9 @@ const CrudInvoice = () => {
                 <button className="add__item-btn" onClick={addItem}><AddIcon />Add New Item</button>
             </div>
             <div className={`new__invoice__btns flex-shrink-0 p-4 flex justify-between gap-x-2`}>
-                {!isEditInvoice && <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={() => setDisplayData(undefined)}>Discard</button>}
+                {!isEditInvoice && <button className="edit__btn bg-white text-[var(--secondary-color)] rounded-3xl" onClick={discardAndCancel}>Discard</button>}
                 <div className='flex flex-1 justify-end'>
-                    {isEditInvoice ? <button className="draft__btn rounded-3xl" onClick={() => setDisplayData(undefined)}>Cancel</button> :
+                    {isEditInvoice ? <button className="draft__btn rounded-3xl" onClick={discardAndCancel}>Cancel</button> :
                     <button className="draft__btn rounded-3xl" onClick={() => handleSaveAsDraft()}>Save as Draft</button>}
                     <button className="mark__as-btn bg-[var(--primary-color)] rounded-3xl" onClick={() => handleSendAndSave()}>{isEditInvoice ? 'Save Changes' : 'Send & Save'}</button>
                 </div>
