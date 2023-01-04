@@ -19,13 +19,13 @@ export const invoiceSlice = createSlice({
       const id = getRandomUniqueId()
       let total: number = 0;
       items?.map((item: Item) => total = item.total + total);
-      const new_item = { ...action.payload, id, total }
+      const new_item = { ...action.payload, id, total, paymentDue: action.payload?.createdAt }
       return [ ...state, new_item ]
     },
     updateInvoice: (state, action) => {
       const updatedState = state.map((inv) => {
         if (inv.id === action.payload?.id) {
-          return { ...inv, ...action.payload }
+          return { ...inv, ...action.payload, paymentDue: action.payload?.createdAt }
         }
         return inv
       })
