@@ -72,7 +72,8 @@ const CrudInvoice = () => {
   }
   
   const handleSendAndSave = () => {
-    const new_item = { ...inoviceDetails, items, status: 'paid' }
+    let new_item = { ...inoviceDetails, items }
+    if (!isEditInvoice) new_item = { ...new_item, status: 'paid'}
     if (isEditInvoice) dispatch(updateInvoice(new_item))
     else dispatch(createInvoice(new_item))
     setDisplayData(null)
